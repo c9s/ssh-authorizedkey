@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"golang.org/x/crypto/ssh"
 )
 
 type AuthorizedKeyEntry struct {
@@ -27,6 +29,18 @@ type AuthorizedKeyEntry struct {
 	KeyType           string            `field:",keytype"`
 	Key               string            `field:",key"`
 	Comment           string            `field:",comment"`
+}
+
+func (e AuthorizedKeyEntry) PublicKey() (out ssh.PublicKey, comment string, options []string, rest []byte, err error) {
+	return ssh.ParseAuthorizedKey(e.PublicKeyBytes())
+}
+
+func (e AuthorizedKeyEntry) PublicKeyBytes() []byte {
+	return []byte(e.PublicKeyString())
+}
+
+func (e AuthorizedKeyEntry) PublicKeyString() string {
+	return e.KeyType + " " + e.Key
 }
 
 func (e AuthorizedKeyEntry) String() string {
