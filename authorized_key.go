@@ -10,25 +10,25 @@ import (
 )
 
 type AuthorizedKeyEntry struct {
-	Command string `field:"command,option"`
+	Command string `field:"command,option" json:"command"`
 	// Environment       string `field:"environment,option"`
-	Environment       map[string]string `field:"environment,option"`
-	CertAuthority     bool              `field:"cert-authority,option"`
-	Principals        string            `field:"principlas,option"`
-	Pty               bool              `field:"pty,option"`
-	PortForwarding    bool              `field:"port-forwarding,option"`
-	X11Forwarding     bool              `field:"x11-forwarding,option"`
-	UserRC            bool              `field:"user-rc,option"`
-	Restrict          bool              `field:"restrict,option"`
-	NoPortForwarding  bool              `field:"no-port-forwarding,option"`
-	NoAgentForwarding bool              `field:"no-agent-forwarding,option"`
-	NoPty             bool              `field:"no-pty,option"`
-	NoX11Forwarding   bool              `field:"no-x11-forwarding,option"`
-	NoUserRC          bool              `field:"no-user-rc,option"`
-	Tunnel            string            `field:"tunnel,option"`
-	KeyType           string            `field:",keytype"`
-	Key               string            `field:",key"`
-	Comment           string            `field:",comment"`
+	Environment       map[string]string `field:"environment,option" json:"environment"`
+	CertAuthority     bool              `field:"cert-authority,option" json:"certAuthority"`
+	Principals        string            `field:"principlas,option" json:"principals"`
+	Pty               bool              `field:"pty,option" json:"pty"`
+	PortForwarding    bool              `field:"port-forwarding,option" json:"portForwarding"`
+	X11Forwarding     bool              `field:"x11-forwarding,option" json:"x11Forwarding"`
+	UserRC            bool              `field:"user-rc,option" json:"userRC"`
+	Restrict          bool              `field:"restrict,option" json:"restrict"`
+	NoPortForwarding  bool              `field:"no-port-forwarding,option" json:"noPortForwarding"`
+	NoAgentForwarding bool              `field:"no-agent-forwarding,option" json:"noAgentForwarding"`
+	NoPty             bool              `field:"no-pty,option" json:"noPty"`
+	NoX11Forwarding   bool              `field:"no-x11-forwarding,option" json:"noX11Forwarding"`
+	NoUserRC          bool              `field:"no-user-rc,option" json:"noUserRC"`
+	Tunnel            string            `field:"tunnel,option" json:"tunnel"`
+	KeyType           string            `field:",keytype" json:"keyType"`
+	Key               string            `field:",key" json:"key"`
+	Comment           string            `field:",comment" json:"comment"`
 
 	FingerprintSHA256 string `field:"-" json:"fingerprintSHA256"`
 }
@@ -108,5 +108,5 @@ func ReflectEncode(entry interface{}) string {
 			}
 		}
 	}
-	return fmt.Sprintf("%s %s %s %s", strings.Join(out.options, ","), out.keyType, out.key, out.comment)
+	return strings.TrimSpace(fmt.Sprintf("%s %s %s %s", strings.Join(out.options, ","), out.keyType, out.key, out.comment))
 }
