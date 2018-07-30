@@ -29,6 +29,8 @@ type AuthorizedKeyEntry struct {
 	KeyType           string            `field:",keytype"`
 	Key               string            `field:",key"`
 	Comment           string            `field:",comment"`
+
+	FingerprintSHA256 string `field:"-" json:"fingerprintSHA256"`
 }
 
 func (e AuthorizedKeyEntry) PublicKey() (out ssh.PublicKey, comment string, options []string, rest []byte, err error) {
@@ -65,6 +67,11 @@ func ReflectEncode(entry interface{}) string {
 		if len(args[0]) == 0 {
 			args[0] = tfield.Name
 		}
+
+		if args[0] == "-" {
+			continue
+		}
+
 		for _, a := range args[1:] {
 			switch a {
 			case "keytype":
