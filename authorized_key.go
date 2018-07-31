@@ -96,7 +96,9 @@ func ReflectEncode(entry interface{}) string {
 							pairs = append(pairs, key.String()+"="+strconv.Quote(strconv.FormatBool(val.Bool())))
 						}
 					}
-					out.options = append(out.options, args[0]+"="+strconv.Quote(strings.Join(pairs, " ")))
+					if len(pairs) > 0 {
+						out.options = append(out.options, args[0]+"="+strconv.Quote(strings.Join(pairs, " ")))
+					}
 
 				case reflect.String:
 					if len(vfield.String()) > 0 {
