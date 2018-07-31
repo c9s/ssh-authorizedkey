@@ -105,7 +105,9 @@ func ReflectEncode(entry interface{}) string {
 						out.options = append(out.options, args[0]+"="+strconv.Quote(vfield.String()))
 					}
 				case reflect.Bool:
-					out.options = append(out.options, args[0])
+					if vfield.Bool() {
+						out.options = append(out.options, args[0])
+					}
 				}
 			}
 		}
